@@ -1,0 +1,23 @@
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <!-- For the Home menu item, not using routerLinkActive since the home page route will be different whether the user
+                     is authenticate or not -->
+                <li [class]="homeClass"><a [routerLink]="['/home']">Home</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['protected']">Protected</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['protected2']">Protected2</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li routerLinkActive="active"><a [routerLink]="['/user/signin']" *ngIf="currentUser === null">Sign In</a></li>
+                <li class="dropdown" *ngIf="currentUser != null" app-dropdown>
+                    <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.displayName || currentUser.email}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a [routerLink]="['/user/profile']" style="cursor: pointer;">Profile</a></li>
+                        <li><a (click)="onSignOut()" style="cursor: pointer;">Sign Out</a></li>
+                    </ul>
+                </li>                    
+            </ul>
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>

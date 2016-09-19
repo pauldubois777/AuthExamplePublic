@@ -1,0 +1,10 @@
+<h3>Profile</h3>
+<form [formGroup]="myForm" (ngSubmit)="onSaveProfile()">
+    <div class="form-group">
+        <label for="displayName">Display Name</label>
+        <input class="form-control" formControlName="displayName" type="text" id="displayName" #displayName>
+        <span *ngIf="!myForm.controls.displayName.pristine && myForm.controls.displayName.errors != null">Display Name cannot exceed 20 characters</span>
+    </div>
+    <button class="btn btn-success" type="submit" [disabled]="!myForm.valid">Save</button>
+    <h4>{{saveProfileMessage}}</h4>
+</form>
