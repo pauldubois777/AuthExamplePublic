@@ -1,7 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { Observable } from 'rxjs/Rx';
-
 import { User } from '../shared/user';
 import { AuthBackendInterface } from './auth-backend.interface';
 import { AuthSigninErrorsEnum } from './auth-signin-errors.enum';
@@ -18,12 +16,12 @@ export class AuthBackendFirebaseService implements AuthBackendInterface {
   signupError = new EventEmitter<AuthSignupErrorsEnum>();
   signoutStatus = new EventEmitter<AuthSignoutStatusEnum>();
   saveProfileStatus = new EventEmitter<AuthSaveProfileStatusEnum>();
-  
-  constructor() {  
+
+  constructor() {
     // The following will emit any change to the user caused by sign in, sign up, or log out.
     firebase.auth().onAuthStateChanged( (firebaseUser) => {
       if (firebaseUser) {
-        let user = this.buildUserFromFirebaseUser(firebaseUser); 
+        let user = this.buildUserFromFirebaseUser(firebaseUser);
         this.currentUser.emit(user);
       } else {
         this.currentUser.emit(null);
@@ -31,33 +29,33 @@ export class AuthBackendFirebaseService implements AuthBackendInterface {
     });
   }
 
-  signupUser(email: string, password: string){
+  signupUser(email: string, password: string) {
     this.currentUser.emit(null);
     this.signupError.emit(null);
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then(
       (firebaseUser: any) => { // onAuthStateChanged in constructor will take care of emitting signed-up user
-        if (!firebaseUser){
+        if (!firebaseUser) {
           // This should never happen since we either sign up, or have an error
           this.currentUser.emit(null);
           this.signupError.emit(AuthSignupErrorsEnum.UNKNOWN_ERROR);
         }
-      }, 
+      },
       (error: any) => {
           this.currentUser.emit(null);
 
           let signupErrorEnum: AuthSignupErrorsEnum = AuthSignupErrorsEnum.UNKNOWN_ERROR;
           switch (error.code) {
-            case "auth/email-already-in-use":
+            case 'auth/email-already-in-use':
               signupErrorEnum = AuthSignupErrorsEnum.EMAIL_ALREADY_IN_USE;
               break;
-            case "auth/invalid-email":
+            case 'auth/invalid-email':
               signupErrorEnum = AuthSignupErrorsEnum.INVALID_EMAIL;
               break;
-            case "auth/operation-not-allowed":
+            case 'auth/operation-not-allowed':
               signupErrorEnum = AuthSignupErrorsEnum.EMAIL_ACCOUNTS_NOT_ENABLED;
               break;
-            case "auth/weak-password":
+            case 'auth/weak-password':
               signupErrorEnum = AuthSignupErrorsEnum.PASSWORD_TOO_WEAK;
               break;
             default:
@@ -68,32 +66,32 @@ export class AuthBackendFirebaseService implements AuthBackendInterface {
     );
   }
 
-  signinUser(email: string, password: string){
+  signinUser(email: string, password: string) {
     this.currentUser.emit(null);
     this.signinError.emit(null);
 
     firebase.auth().signInWithEmailAndPassword(email, password).then(
       (firebaseUser: any) => { // onAuthStateChanged in constructor will take care of emitting signed-up user
-        if (!firebaseUser){
+        if (!firebaseUser) {
           // This should never happen since we either sign in, or have an error
           this.currentUser.emit(null);
           this.signinError.emit(AuthSigninErrorsEnum.UNKNOWN_ERROR);
         }
-      }, 
+      },
       (error: any) => {
           this.currentUser.emit(null);
           let signinErrorEnum: AuthSigninErrorsEnum = AuthSigninErrorsEnum.UNKNOWN_ERROR;
           switch (error.code) {
-            case "auth/invalid-email":
+            case 'auth/invalid-email':
               signinErrorEnum = AuthSigninErrorsEnum.INVALID_EMAIL;
               break;
-            case "auth/user-disabled":
+            case 'auth/user-disabled':
               signinErrorEnum = AuthSigninErrorsEnum.USER_DISABLED;
               break;
-            case "auth/user-not-found":
+            case 'auth/user-not-found':
               signinErrorEnum = AuthSigninErrorsEnum.USER_NOT_FOUND;
               break;
-            case "auth/wrong-password":
+            case 'auth/wrong-password':
               signinErrorEnum = AuthSigninErrorsEnum.WRONG_PASSWORD;
               break;
             default:
@@ -104,7 +102,7 @@ export class AuthBackendFirebaseService implements AuthBackendInterface {
     );
   }
 
-  signoutUser(){
+  signoutUser() {
     this.signoutStatus.emit(null);
 
     firebase.auth().signOut().then(
@@ -118,8 +116,8 @@ export class AuthBackendFirebaseService implements AuthBackendInterface {
     );
   }
 
-  getCurrentUser(): User{
-    var firebaseUser = firebase.auth().currentUser;
+  getCurrentUser(): User {
+    let firebaseUser = firebase.auth().currentUser;
 
     if (firebaseUser) {
       return this.buildUserFromFirebaseUser(firebaseUser);
@@ -128,25 +126,25 @@ export class AuthBackendFirebaseService implements AuthBackendInterface {
     }
   }
 
-  updateUserProfile(displayName: string){
-    var firebaseUser = firebase.auth().currentUser;
-    if (firebaseUser === null){
+  updateUserProfile(displayName: string) {
+    let firebaseUser = firebase.auth().currentUser;
+    if (firebaseUser === null) {
       this.saveProfileStatus.emit(AuthSaveProfileStatusEnum.UNABLE_TO_AQUIRE_USER);
-    }
-    else{
+    } else {
       firebaseUser.updateProfile({displayName: displayName}).then(
         () => {
           this.saveProfileStatus.emit(AuthSaveProfileStatusEnum.SUCCESS);
           this.currentUser.emit(this.getCurrentUser());
-        }, 
+        },
         (error: any) => {
-            this.saveProfileStatus.emit(AuthSaveProfileStatusEnum.UNKNOWN_ERROR); // The firebase docs don't explain what is returned on error, so just show unknown
+          // The firebase docs don't explain what is returned on error, so just show unknown
+          this.saveProfileStatus.emit(AuthSaveProfileStatusEnum.UNKNOWN_ERROR);
         }
       );
     }
   }
 
-  private buildUserFromFirebaseUser(firebaseUser: any): User{
+  private buildUserFromFirebaseUser(firebaseUser: any): User {
     return new User(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName || firebaseUser.email);
   }
 }

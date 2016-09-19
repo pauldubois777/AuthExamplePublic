@@ -13,7 +13,7 @@ import { AuthSignoutStatusEnum } from '../auth/auth-signout-status.enum';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   currentUser: User = null;
-  homeClass: string = "active";
+  homeClass: string = 'active';
 
   private currentUserSubscription: Subscription;
   private signoutStatusSubscription: Subscription;
@@ -25,46 +25,44 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.currentUserSubscription = this.authService.currentUser.subscribe(
         // Need to run the following in the ngZone so that it will refresh the UI when the user refreshes the page
         // while logged in.
-        (user: User) => this.ngZone.run( () => this.currentUser = user ) 
+        (user: User) => this.ngZone.run( () => this.currentUser = user )
       );
 
       this.signoutStatusSubscription = this.authService.signOutStatus.subscribe(
         (signoutStatus: AuthSignoutStatusEnum) => {
-          if (signoutStatus === AuthSignoutStatusEnum.SUCCESS){
+          if (signoutStatus === AuthSignoutStatusEnum.SUCCESS) {
               this.router.navigate(['/signedout']);
-          }
-          else{
-            if (signoutStatus === AuthSignoutStatusEnum.FAILURE){
-              alert("Sign Out FAILED!  Please try again"); // Shouldn't ever happen, so just pop an alert.
+          } else {
+            if (signoutStatus === AuthSignoutStatusEnum.FAILURE) {
+              alert('Sign Out FAILED!  Please try again'); // Shouldn't ever happen, so just pop an alert.
             }
           }
         }
       );
 
-      // The following subscription is used to apply the "active" class the the "Home" menu item if either the
+      // The following subscription is used to apply the 'active' class the the 'Home' menu item if either the
       // non-authenticate Home page is the current route, or the Protected Home page is the current route.
       // Might be easier to just have a single Home page.
       this.routerEventSubscription = this.router.events.subscribe(
         // Need to run the following in the ngZone so that it will refresh the UI when the user refreshes the page
         // while logged in.
         (event: Event) => this.ngZone.run( () => {
-          if(event instanceof NavigationEnd) {
-            if (event.url === "/home" || event.url === "/protectedHome"){
-              this.homeClass = "active";
-            }
-            else{
-              this.homeClass = "";
+          if (event instanceof NavigationEnd) {
+            if (event.url === '/home' || event.url === '/protectedHome') {
+              this.homeClass = 'active';
+            } else {
+              this.homeClass = '';
             }
           }
         })
       );
   }
 
-  onSignOut(){
+  onSignOut() {
     this.authService.signoutUser();
   }
-  
-  ngOnDestroy(){
+
+  ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
     this.signoutStatusSubscription.unsubscribe();
     this.routerEventSubscription.unsubscribe();

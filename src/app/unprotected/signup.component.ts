@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { Subscription } from "rxjs/Rx";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
-import { AuthService } from "../auth/auth.service";
-import { User } from "../shared/user";
+import { AuthService } from '../auth/auth.service';
+import { User } from '../shared/user';
 
 @Component({
     templateUrl: './signup.component.html'
@@ -16,14 +16,14 @@ export class SignupComponent implements OnInit, OnDestroy {
     private errorMessageSubscription: Subscription;
 
     constructor(
-        private fb: FormBuilder, 
+        private fb: FormBuilder,
         private authService: AuthService,
         private router: Router) {
     }
 
     onSignup() {
         this.authService.signupUser(this.myForm.controls['email'].value, this.myForm.controls['password'].value);
-        this.signupStatus = "Signing up...";
+        this.signupStatus = 'Signing up...';
     }
 
     ngOnInit(): any {
@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit, OnDestroy {
                 this.isEmail
             ])],
             password: ['', Validators.compose([
-                Validators.required, 
+                Validators.required,
                 Validators.minLength(6)
             ])],
             confirmPassword: ['', Validators.compose([
@@ -44,25 +44,24 @@ export class SignupComponent implements OnInit, OnDestroy {
 
         this.currentUserSubscription = this.authService.currentUser.subscribe(
             (user: User) => {
-                if (user != null){
+                if (user != null) {
                     this.router.navigate(['/user/profile']); // Let new user setup their profile
-                }
-                else{
-                    this.signupStatus = "Unknown error occurred while signing up.  Please try again";
+                } else {
+                    this.signupStatus = 'Unknown error occurred while signing up.  Please try again';
                 }
             }
         );
 
         this.errorMessageSubscription = this.authService.errorMessage.subscribe(
-            (errorMessage: string) => {this.signupStatus = errorMessage}
+            (errorMessage: string) => { this.signupStatus = errorMessage; }
         );
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.currentUserSubscription.unsubscribe();
         this.errorMessageSubscription.unsubscribe();
     }
-    
+
     isEmail(control: FormControl): {[s: string]: boolean} {
         if (!control.value.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
             return {noEmail: true};

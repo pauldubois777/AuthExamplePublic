@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 
-import { User } from "../shared/user";
+import { User } from '../shared/user';
 import { AuthSigninErrorsEnum } from './auth-signin-errors.enum';
 import { AuthSignupErrorsEnum } from './auth-signup-errors.enum';
 import { AuthSignoutStatusEnum } from './auth-signout-status.enum';

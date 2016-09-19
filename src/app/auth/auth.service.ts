@@ -1,8 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { Observable, Subscription } from 'rxjs/Rx';
-
-import { User } from "../shared/user";
+import { User } from '../shared/user';
 import { AuthBackendFirebaseService } from './auth-backend-firebase.service';
 import { AuthSigninErrorsEnum } from './auth-signin-errors.enum';
 import { AuthSignupErrorsEnum } from './auth-signup-errors.enum';
@@ -15,41 +13,41 @@ export class AuthService {
   errorMessage = new EventEmitter<string>();
   saveProfileMessage = new EventEmitter<string>();
   signOutStatus = new EventEmitter<AuthSignoutStatusEnum>();
-  
-  constructor(private authBackendService: AuthBackendFirebaseService) { 
+
+  constructor(private authBackendService: AuthBackendFirebaseService) {
       this.authBackendService.currentUser.subscribe(
         (user: User) => { this.currentUser.emit(user); }
       );
 
       this.authBackendService.signinError.subscribe(
         (signinErrorEnum: AuthSigninErrorsEnum) => {
-          let signinErrorMessage: string = '';
+          let signinErrorMessage = '';
           switch (signinErrorEnum) {
             case AuthSigninErrorsEnum.INVALID_EMAIL :
             case AuthSigninErrorsEnum.USER_NOT_FOUND :
             case AuthSigninErrorsEnum.WRONG_PASSWORD :
               signinErrorMessage = 'User not found or incorrect password.  Please try again.';
-              break;              
+              break;
             case AuthSigninErrorsEnum.USER_DISABLED :
               signinErrorMessage = 'Unable to sign in: Your account has been disabled.';
               break;
             case AuthSigninErrorsEnum.UNKNOWN_ERROR :
               signinErrorMessage = 'Unknow Error.  Please try again.';
-              break;              
+              break;
             default:
               signinErrorMessage = 'Unknown Sign-In Error Enumerator.  Please contact technical support.';
           }
-          this.errorMessage.emit(signinErrorMessage); 
+          this.errorMessage.emit(signinErrorMessage);
         }
       );
 
       this.authBackendService.signupError.subscribe(
         (signupErrorEnum: AuthSignupErrorsEnum) => {
-          let signupErrorMessage: string = '';
+          let signupErrorMessage = '';
           switch (signupErrorEnum) {
             case AuthSignupErrorsEnum.EMAIL_ALREADY_IN_USE :
               signupErrorMessage = 'This email address is already in use.  Please use a different address or sign in.';
-              break;              
+              break;
             case AuthSignupErrorsEnum.INVALID_EMAIL :
               signupErrorMessage = 'Please enter a valid email address.';
               break;
@@ -61,11 +59,11 @@ export class AuthService {
               break;
             case AuthSignupErrorsEnum.UNKNOWN_ERROR :
               signupErrorMessage = 'Unknow Error.  Please try again.';
-              break;              
+              break;
             default:
               signupErrorMessage = 'Unknown Sign-Up Error Enumerator.  Please contact technical support.';
           }
-          this.errorMessage.emit(signupErrorMessage); 
+          this.errorMessage.emit(signupErrorMessage);
         }
       );
 
@@ -77,11 +75,11 @@ export class AuthService {
 
       this.authBackendService.saveProfileStatus.subscribe(
         (saveProfileStatusEnum: AuthSaveProfileStatusEnum) => {
-          let saveProfileStatus: string = '';
+          let saveProfileStatus = '';
           switch (saveProfileStatusEnum) {
             case AuthSaveProfileStatusEnum.UNABLE_TO_AQUIRE_USER :
               saveProfileStatus = 'Unable to aquire user for update.  Please try again, or re-login.';
-              break;              
+              break;
             case AuthSaveProfileStatusEnum.SUCCESS :
               saveProfileStatus = 'Profile Updated.';
               break;
@@ -91,33 +89,33 @@ export class AuthService {
             default:
               saveProfileStatus = 'Unknown Save-Profile-Status Enumerator.  Please contact technical support.';
           }
-          this.saveProfileMessage.emit(saveProfileStatus); 
+          this.saveProfileMessage.emit(saveProfileStatus);
         }
       );
   }
 
-  signupUser(email: string, password: string){
+  signupUser(email: string, password: string) {
     this.currentUser.emit(null);
     this.errorMessage.emit(null);
     this.authBackendService.signupUser(email, password);
   }
 
-  signinUser(email: string, password: string){
+  signinUser(email: string, password: string) {
     this.currentUser.emit(null);
     this.errorMessage.emit(null);
     this.authBackendService.signinUser(email, password);
   }
 
-  signoutUser(){
+  signoutUser() {
     this.signOutStatus.emit(null);
     this.authBackendService.signoutUser();
   }
 
-  getCurrentUser(): User{
+  getCurrentUser(): User {
     return this.authBackendService.getCurrentUser();
   }
 
-  updateUserProfile(displayName: string){
+  updateUserProfile(displayName: string) {
     this.authBackendService.updateUserProfile(displayName);
   }
 }

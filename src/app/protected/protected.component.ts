@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   template: `
@@ -6,11 +6,5 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class ProtectedComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class ProtectedComponent {
 }

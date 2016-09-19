@@ -1,10 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ApplicationRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { routes } from './app.routes'; 
+import { routes } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './unprotected/signin.component';

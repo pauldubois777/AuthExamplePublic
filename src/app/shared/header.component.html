@@ -10,7 +10,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li routerLinkActive="active"><a [routerLink]="['/user/signin']" *ngIf="currentUser === null">Sign In</a></li>
-                <li class="dropdown" *ngIf="currentUser != null" app-dropdown>
+                <li class="dropdown" *ngIf="currentUser != null" appDropDown>
                     <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.displayName || currentUser.email}}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a [routerLink]="['/user/profile']" style="cursor: pointer;">Profile</a></li>
