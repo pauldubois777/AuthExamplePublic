@@ -36,11 +36,14 @@ If an un-authenticated user tries to navigate to a protected page, they will be 
 
 If a signed-in user refreshes a page in the browser, they will be routed to that page.  This will work for bookmarks as well.  As long as the user is still authenticated in the browser, the app will allow routing to protected pages. 
 
+After signing out, the user is routed to the Signed Out page.
+
 ## Getting Started with the code
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.14.
 
 The application is setup to use Google Firebase for the backend authentication.  You can easily setup a free Google Firebase account by going [here](https://firebase.google.com/)
+
 Once you get your account setup, you need to update the Firebase account settings in the index.html file, and remove the alert :)
 
 If you don't want to use Google Firebase, You can easily use any backend authentication by implementing the AuthBackendInterface, and injecting it into the AuthService.
