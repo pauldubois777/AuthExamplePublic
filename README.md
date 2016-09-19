@@ -24,7 +24,7 @@ If you want to take a great Angular 2 course, checkout out[Angular 2 - The Compl
 
 You can view a working Demo [here](http://authexample.coderforchrist.com).
 
-* You do not have to use real email addresses in the demo, since it does not require email verification *
+*You do not have to use real email addresses in the demo, since it does not require email verification*
 
 ## How It Works
 
