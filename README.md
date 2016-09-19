@@ -71,10 +71,13 @@ auth/AuthGuardService
 - Translates a navigation to the Home page to the Protecte Home page if the user is authenticated.
 - Redirects to the Sign In page if the user is not authenticated, and they are trying to view a protected page.  Passes the Url for redirection after sign-in.
 
-## Known Issues / Improvements
+## Known Issues
 
 - Not mobile friendly
 - May not be using all of Angular 2 "Best Practices" since I am pretty new to Angular 2.
+
+## Improvements
+
 - Add the authentication token to the User class?  I am not sure if this would be considered OK for security reasons??
 - Implement some sort of login timeout, so that the users is logged out after a certain length of in-activity.
 - Implement "Change Password" logic
