@@ -28,6 +28,10 @@ export class SigninComponent implements OnInit, OnDestroy {
         this.authService.signinUser(this.myForm.controls['email'].value, this.myForm.controls['password'].value);
         this.signinStatus = "Signing in...";
     }
+    
+    onSignUp(){
+        this.router.navigate(['/user/signup']);
+    }
 
     ngOnInit():any {
         this.myForm = this.fb.group({
