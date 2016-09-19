@@ -2,6 +2,7 @@
 Angular 2 example application for client-side authentication and routing.
 
 Illustrates how to:
+- Use Event Emitters with asynchronous authentication
 - Use route guards
 - Redirect to a protected page after login
 - Show different home page based on whether user is authenticate or not
@@ -16,17 +17,18 @@ I created this application to learn more about:
 - General Angular 2 concepts
 
 I am sharing it publicly mainly for my Udemy class-mates, but also for anyone else that is interested in these topics.
+
 If you want to take a great Angular 2 course, checkout out[Angular 2 - The Complete Guide](https://www.udemy.com/the-complete-guide-to-angular-2)
 
-# Demo
+## Demo
 
 You can view a working Demo [here](http://authexample.coderforchrist.com).
 
-# How It Works
+## How It Works
 
 When the user first visits the site, they are present with the un-protected Home page.  They can click a button to sign in, or create a new account.
 
-If the user signs in, they will then be able to view a protected Home page, the two protected pages, as well as the user profile page (through the user dropdown on the right side of the menu bar).
+Once the user signs in, they will then be able to view all the protected pages which include the protect Home page, the two protected pages, as well as the user profile page (through the user dropdown on the right side of the menu bar).
 
 If the user creates a new account, they will be taken to the user profile page, where they can update their Display Name, or leave it as their email address.  They can then view all the protected pages.
 
@@ -34,19 +36,22 @@ If an un-authenticated user tries to navigate to a protected page, they will be 
 
 If a signed-in user refreshes a page in the browser, they will be routed to that page.  This will work for bookmarks as well.  As long as the user is still authenticated in the browser, the app will allow routing to protected pages. 
 
-# Getting Started
+## Getting Started with the code
+
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.14.
 
 The application is setup to use Google Firebase for the backend authentication.  You can easily setup a free Google Firebase account by going [here](https://firebase.google.com/)
 Once you get your account setup, you need to update the Firebase account settings in the index.html file, and remove the alert :)
 
 If you don't want to use Google Firebase, You can easily use any backend authentication by implementing the AuthBackendInterface, and injecting it into the AuthService.
 
-# WARNING
+## WARNING
 
 Please remember that this client-side authentication routing is "Eye candy".  IOW, it might be bypassed and allow an un-authenticated user to see a protected page.
-Please insure that protected pages use further authentication when retrieving and displaying data. 
 
-# Authentcaiton and Routing Overview
+**Please insure that protected pages use further authentication when retrieving and displaying data.** 
+
+## Authentcaiton and Routing Overview
 
 auth/AuthService: 
 - Wraps the actual backend authentication service using auth/AuthBackendInterface.
@@ -63,7 +68,7 @@ auth/AuthGuardService
 - Translates a navigation to the Home page to the Protecte Home page if the user is authenticated.
 - Redirects to the Sign In page if the user is not authenticated, and they are trying to view a protected page.  Passes the Url for redirection after sign-in.
 
-# Known Issues / Improvements
+## Known Issues / Improvements
 
 - Not mobile friendly
 - May not be using all of Angular 2 "Best Practices" since I am pretty new to Angular 2.
