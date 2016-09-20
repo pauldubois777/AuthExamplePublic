@@ -44,6 +44,8 @@ After signing out, the user is routed to the Signed Out page.
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.14.
 
+If you use some other process for creating Angular 2 apps, or just do it from scratch, you should be able to take the contents of the src/app folder and the index.html file and use them in a new app. 
+
 The application is setup to use Google Firebase for the backend authentication.  You can easily setup a free Google Firebase account by going [here](https://firebase.google.com/)
 
 Once you get your account setup, you need to update the Firebase account settings in the index.html file, and remove the alert :)
@@ -76,7 +78,7 @@ auth/AuthGuardService
 ## Known Issues
 
 - Not mobile friendly
-- May not be using all of Angular 2 "Best Practices" since I am pretty new to Angular 2.
+- If you see any problems with this code, please let me know.  Thanks!
 
 ## Improvements
 
