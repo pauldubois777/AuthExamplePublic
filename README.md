@@ -20,12 +20,6 @@ I am sharing it publicly mainly for my Udemy class-mates, but also for anyone el
 
 If you want to take a great Angular 2 course, checkout out[Angular 2 - The Complete Guide](https://www.udemy.com/the-complete-guide-to-angular-2)
 
-## Demo
-
-You can view a working Demo [here](http://authexample.coderforchrist.com).
-
-*You do not have to use real email addresses in the demo, since it does not require email verification*
-
 ## How It Works
 
 When the user first visits the site, they are present with the un-protected Home page.  They can click a button to sign in, or create a new account.
